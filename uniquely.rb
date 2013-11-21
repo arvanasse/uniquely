@@ -2,7 +2,7 @@ class Uniquely
   attr_reader :sequences
   attr_accessor :input_path
 
-  def initialize( input_path: './dictionary.txt', word_path: 'words.txt', sequence_path: 'sequences.txt' )
+  def initialize( input_path: './dictionary.txt', word_path: 'words', sequence_path: 'sequences' )
     @input_path, @word_path, @sequence_path = input_path, word_path, sequence_path
     clear_sequences
   end
@@ -17,8 +17,8 @@ class Uniquely
         word_file.puts source.first
       end
 
-      # sequence_file.close
-      # word_file.close
+      sequence_file.close
+      word_file.close
     end
   end
 

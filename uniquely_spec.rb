@@ -233,16 +233,4 @@ describe Uniquely do
       end
     end
   end
-
-  describe "#process_file" do
-    before(:each){ @uniquely = Uniquely.new input_path: 'sample.txt' }
-
-    it "should open a file name the output streams for writing" do
-      File.should_receive(:open).with('sample.txt').exactly(:once)
-      %w[sequences.txt words.txt].each do |filename|
-        File.should_receive(:open).with(filename, 'w').exactly(:once)
-      end
-      @uniquely.process_file
-    end
-  end
 end
