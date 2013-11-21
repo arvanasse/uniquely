@@ -145,6 +145,14 @@ describe Uniquely do
         end
       end
     end
+
+    context "when the word repeats a four character sequence" do
+      let(:word){ 'zoomzoom' }
+
+      it "should include the four character sequence twice" do
+        subject.count('zoom').should eql 2
+      end
+    end
   end
 
   describe "#parse_stream" do
@@ -167,6 +175,20 @@ describe Uniquely do
         @uniquely.send(:sequences_from, words.first).each do |sequence| 
           @uniquely.sequences[sequence.to_sym].should include words.first
         end
+      end
+    end
+
+    context "when a line contains duplicates within the word" do
+      let(:words){ %w[zoomzoom] }
+
+      it "should contain two entries in the value for the repeated sequence" do
+        @uniquely.send(:parse_stream, input_stream)
+        @uniquely.sequences[:zoom].size.should eql 2
+      end
+
+      it "should not contain the repeated term in the #unique_sequences" do
+        @uniquely.send(:parse_stream, input_stream)
+        @uniquely.unique_sequences.should_not include :zoom
       end
     end
 
