@@ -29,6 +29,17 @@ describe Uniquely do
       it{ @uniquely.unique_sequences.should eql @uniquely.sequences }
     end
 
+    context "when the same letter sequences have been added with different capitalization" do
+      before :each do
+        @uniquely.send :add_sequence, 'Andy', 'hAndy'
+        @uniquely.send :add_sequence, 'andy', 'dandy'
+      end
+
+      it "should preserve unique capitalization (case sensitive)" do
+        @uniquely.unique_sequences.should eql({ :Andy => ['hAndy'], :andy => ['dandy'] })
+      end
+    end
+
     context "when duplicate sequences have been added" do
       before :each do
         @uniquely.send :add_sequence, 'andy', 'handy'
